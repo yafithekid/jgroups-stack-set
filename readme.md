@@ -21,3 +21,8 @@ Replicated Stack and Set implementation with JGroups.
 ### Test Scripts
 
 Located at `src/test/java`
+
+Sometimes the test script will fail, because synchronization between members has latency.
+For example, when there are two stack A and B, when we push element 'a' at stack A, the stack B
+will not immediately have 'a' too. So, testing A.push(a) and then B.top() == 'a' will have non deterministic
+result: it will correct when B completes its sync before B.top() == 'a' called, and it will fails otherwise.
