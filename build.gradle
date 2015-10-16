@@ -1,5 +1,5 @@
 group 'com.yafithekid'
-version '1.0-SNAPSHOT'
+version '1.0'
 
 apply plugin: 'java'
 
@@ -12,4 +12,26 @@ repositories {
 dependencies {
     compile 'org.jgroups:jgroups:3.6.6.Final'
     testCompile group: 'junit', name: 'junit', version: '4.11'
+}
+
+task setJar(type: Jar){
+    manifest {
+        attributes 'Main-Class': 'ReplSet'
+    }
+    baseName = 'set'
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
+}
+
+task stackJar(type: Jar){
+    manifest {
+        attributes 'Main-Class': 'ReplStack'
+    }
+    baseName = 'set'
+    from {
+        configurations.compile.collect { it.isDirectory() ? it : zipTree(it) }
+    }
+    with jar
 }

@@ -19,10 +19,14 @@ public class ReplSet<T> extends ReceiverAdapter {
         set = new HashSet<T>();
         start();
         logger = Logger.getLogger(this.getClass().getName());
+        System.out.println("Kecewa guwa");
+        for (T t: set) {
+            System.out.println(t.toString());
+        }
     }
 
     public boolean add(T t){
-        boolean ret = contains(t);
+        boolean ret = !contains(t);
 
         try {
             ReplObject<T> obj = new ReplObject<>(ReplObject.SET_ADD);
@@ -79,10 +83,12 @@ public class ReplSet<T> extends ReceiverAdapter {
             if (obj.getType() == ReplObject.SET_ADD) {
                 synchronized (set) {
                     set.add(obj.getValue());
+                    System.out.println("Added " +  obj.getValue().toString());
                 }
             } else if (obj.getType() == ReplObject.SET_REMOVE) {
                 synchronized (set) {
                     set.remove(obj.getValue());
+                    System.out.println("Remove " + obj.getValue().toString());
                 }
             }
         }
